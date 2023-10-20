@@ -36,6 +36,13 @@ async function run() {
             const productCollection = client.db('productsDB').collection('products');
 
 
+            app.get('/product', async (req, res) => {
+                  const cursor = productCollection.find();
+                  const result = await cursor.toArray();
+                  res.send(result);
+            });
+
+
             app.post('/product', async (req, res) => {
                   const newProduct = req.body;
                   console.log(newProduct);
@@ -44,6 +51,27 @@ async function run() {
                   res.send(result);
 
             });
+
+
+
+            try {
+                  const response = await fetch(`http://localhost:5001/users/${_id}`, {
+                        method: "DELETE",
+                  });
+                  const result = await response.json();
+                  console.log(result);
+            } catch (error) {
+                  console.log(error);
+            }
+
+
+            fetch(`http://localhost:5001/users/${_id}`, {
+                  method: "DELETE",
+            })
+                  .then((res) => res.json())
+                  .then((data) => {
+                        console.log(data);
+                  });
 
 
 
